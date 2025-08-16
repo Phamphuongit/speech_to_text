@@ -525,7 +525,7 @@ public class SpeechToTextPlugin: NSObject, FlutterPlugin {
         if #available(iOS 10.0, *) {
           if let availableInputs = self.audioSession.availableInputs {
             for input in availableInputs {
-              NSLog("Available input: \(input.portName) (\(input.portType.rawValue))")
+              print("Available input: \(input.portName) (\(input.portType.rawValue))")
               if input.portName.contains("BlackHole") {
                 try self.audioSession.setPreferredInput(input)
               }

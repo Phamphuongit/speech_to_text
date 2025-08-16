@@ -519,18 +519,19 @@ public class SpeechToTextPlugin: NSObject, FlutterPlugin {
         rememberedAudioCategoryOptions = self.audioSession.categoryOptions
         try self.audioSession.setCategory(
           AVAudioSession.Category.playAndRecord,
-          options: [.defaultToSpeaker, .allowBluetooth, .allowBluetoothA2DP, .mixWithOthers])
+          options: [.defaultToSpeaker, .allowBluetooth, .allowBluetoothA2DP, .allowAirPlay, .mixWithOthers])
         //            try self.audioSession.setMode(AVAudioSession.Mode.measurement)
+        try self.audioSession.setMode(.default)
         if #available(iOS 10.0, *) {
           if let availableInputs = self.audioSession.availableInputs {
             for input in availableInputs {
               NSLog("Available input: \(input.portName) (\(input.portType.rawValue))")
               if input.portName.contains("BlackHole") {
                 try self.audioSession.setPreferredInput(input)
+              }
             }
+          }
         }
-    }
-}
         if sampleRate > 0 {
           try self.audioSession.setPreferredSampleRate(Double(sampleRate))
         }
